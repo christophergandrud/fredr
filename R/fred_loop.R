@@ -5,13 +5,15 @@
 #' @param iso2c character vector of ISO two letter country codes.
 #' @param var_name character string of the name for the downloaded variable.
 #'
-#' @example 
+#' @examples
 #' # Download Central government debt, total (% of GDP) for Ireland and Japan
-#' fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'), 
+#' fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'),
 #'           var_name = 'pubdebtgdp_cent_fred')
 #'
 #' @importFrom quantmod getSymbols
 #' @importFrom lubridate ymd
+#'
+#' @export
 
 fred_loop <- function(prefix, suffix, iso2c, var_name) {
 
@@ -35,7 +37,7 @@ fred_loop <- function(prefix, suffix, iso2c, var_name) {
         marker$iso2c <- gsub(prefix, '', u)
         marker$iso2c <- gsub(suffix, '', marker$iso2c)
 
-        marker$date <- rownames(marker) %>% ymd
+        marker$date <- ymd(rownames(marker))
 
         names(marker) <- c(var_name, 'iso2c', 'date')
 

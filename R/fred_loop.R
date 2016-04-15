@@ -36,7 +36,7 @@ fred_loop <- function(prefix, suffix, iso2c, var_name, single_symbol)
     }
     else if (missing(single_symbol)) {
         if (any(duplicated(iso2c))) stop('iso2c has duplicates. Please remove.',
-                                         .call = FALSE)
+                                         call. = FALSE)
         fred_id <- sprintf('%s%s%s', prefix, iso2c, suffix)
     }
 

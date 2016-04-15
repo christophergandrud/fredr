@@ -35,7 +35,7 @@ fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'),
 }
 
 # Download single series (US Federal Funds Rate)
-fred_loop(single_symbol = 'FEDFUNDS')
+fred_loop(single_symbol = 'FEDFUNDS', var_name = 'us_fed_funds')
 
 }
 

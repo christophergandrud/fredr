@@ -21,7 +21,7 @@
 #' }
 #'
 #' # Download single series (US Federal Funds Rate)
-#' fred_loop(single_symbol = 'FEDFUNDS')
+#' fred_loop(single_symbol = 'FEDFUNDS', var_name = 'us_fed_funds')
 #'
 #' @importFrom quantmod getSymbols
 #' @importFrom lubridate ymd
@@ -66,6 +66,8 @@ fred_loop <- function(prefix, suffix, iso2c, var_name, single_symbol)
             marker$iso2c <- gsub(suffix, '', marker$iso2c)
             names(marker) <- c(var_name, 'date', 'iso2c')
         }
+
+        else names(marker) <- c(var_name, 'date')
 
         if (is.null(fred_combined)) {
             fred_combined <- marker

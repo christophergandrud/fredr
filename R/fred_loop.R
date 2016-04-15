@@ -4,23 +4,39 @@
 #' @param suffix character string FRED symbol suffix.
 #' @param iso2c character vector of ISO two letter country codes.
 #' @param var_name character string of the name for the downloaded variable.
+#' @param single_symbol a character string of a single FRED symbol to download
+#' only one series. Note: do not use with \code{prefix}, \code{suffix},
+#' \code{iso2c}. Note, will not return a column with the ISO two letter country
+#' code.
 #'
 #' @examples
 #' # Download Central government debt, total (% of GDP) for Ireland and Japan
 #' fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'),
 #'           var_name = 'pubdebtgdp_cent_fred')
 #'
+#' # Download single series (US Federal Funds Rate)
+#' fred_loop(single_symbol = 'FEDFUNDS')
+#'
 #' @importFrom quantmod getSymbols
 #' @importFrom lubridate ymd
 #'
 #' @export
 
-fred_loop <- function(prefix, suffix, iso2c, var_name) {
-
-    fred_id <- sprintf('%s%s%s', prefix, iso2c, suffix)
+fred_loop <- function(prefix, suffix, iso2c, var_name, single_symbol)
+{
+    if (!missing(single_symbol)) {
+        fred_id <- single_symbol
+        if (missing(var_name)) var_name <- fred_id
+    }
+    else if (missing(single_symbol)) {
+        fred_id <- sprintf('%s%s%s', prefix, iso2c, suffix)
+    }
 
     missing <- NULL
     fred_combined <- NULL
+
+    message('Downloading: \n')
+
     for (u in fred_id){
         message(u)
         marker <- tryCatch(
@@ -34,12 +50,14 @@ fred_loop <- function(prefix, suffix, iso2c, var_name) {
         }
 
         # Clean up
-        marker$iso2c <- gsub(prefix, '', u)
-        marker$iso2c <- gsub(suffix, '', marker$iso2c)
 
         marker$date <- ymd(rownames(marker))
 
-        names(marker) <- c(var_name, 'iso2c', 'date')
+        if (missing(single_symbol)) {
+            marker$iso2c <- gsub(prefix, '', u)
+            marker$iso2c <- gsub(suffix, '', marker$iso2c)
+            names(marker) <- c(var_name, 'date', 'iso2c')
+        }
 
         if (is.null(fred_combined)) {
             fred_combined <- marker
@@ -47,9 +65,18 @@ fred_loop <- function(prefix, suffix, iso2c, var_name) {
             fred_combined <- rbind(fred_combined, marker)
 
         # Sleep to avoid being locked out
-        Sys.sleep(3)
+        if (missing(single_symbol)) Sys.sleep(2)
     }
+
     row.names(fred_combined) <- NULL
-    fred_combined <- fred_combined[, c('iso2c', 'date', var_name)]
+
+    if (missing(single_symbol)) {
+        fred_combined <- fred_combined[, c('iso2c', 'date', var_name)]
+    }
+
+    else if (!missing(single_symbol)) {
+        fred_combined <- fred_combined[, c('date', var_name)]
+    }
+
     return(fred_combined)
 }

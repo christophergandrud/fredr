@@ -3,6 +3,8 @@
 A simple R package for downloading a variable from the
 [FRED database](https://research.stlouisfed.org/fred2/) for multiple countries.
 
+[![CRAN Version](http://www.r-pkg.org/badges/version/simPH)](http://cran.r-project.org/package=simPH) [![Build Status](https://travis-ci.org/christophergandrud/fredr.svg?branch=master)](https://travis-ci.org/christophergandrud/fredr)
+
 ## Examples
 
 For series that are available across multiple countries, FRED denotes each series with a common ID scheme. This includes a **prefix**, the country's [ISO two letter country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), and a **suffix**. You can find the prefix and suffix on each series' data page on FRED.

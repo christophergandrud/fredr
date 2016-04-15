@@ -10,9 +10,15 @@
 #' code.
 #'
 #' @examples
+#' #' # Download Central government debt, total (% of GDP) for Ireland
+#' fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = 'IE',
+#'           var_name = 'pubdebtgdp_cent_fred')
+#'
+#'\dontrun{
 #' # Download Central government debt, total (% of GDP) for Ireland and Japan
 #' fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'),
 #'           var_name = 'pubdebtgdp_cent_fred')
+#' }
 #'
 #' # Download single series (US Federal Funds Rate)
 #' fred_loop(single_symbol = 'FEDFUNDS')
@@ -29,6 +35,8 @@ fred_loop <- function(prefix, suffix, iso2c, var_name, single_symbol)
         if (missing(var_name)) var_name <- fred_id
     }
     else if (missing(single_symbol)) {
+        if (any(duplicated(iso2c))) stop('iso2c has duplicates. Please remove.',
+                                         .call = FALSE)
         fred_id <- sprintf('%s%s%s', prefix, iso2c, suffix)
     }
 
@@ -65,7 +73,9 @@ fred_loop <- function(prefix, suffix, iso2c, var_name, single_symbol)
             fred_combined <- rbind(fred_combined, marker)
 
         # Sleep to avoid being locked out
-        if (missing(single_symbol)) Sys.sleep(2)
+        if (missing(single_symbol)) {
+            if (!isTRUE(last_element(u, fred_id))) Sys.sleep(2)
+        }
     }
 
     row.names(fred_combined) <- NULL

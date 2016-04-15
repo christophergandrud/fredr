@@ -1,12 +1,16 @@
 Package: fredr
 Type: Package
 Title: Download a variable from the FRED database for multiple countries
-Description: Download a variable from FRED (https://research.stlouisfed.org/fred2/) for multiple countries.
+Description: Download a variable from FRED
+    (https://research.stlouisfed.org/fred2/) for multiple countries. Also can
+    download a single series.
 Version: 0.1.0
+Date: 2016-04-15
 Authors@R: c(
     person("Christopher", "Gandrud", email = "christopher.gandrud@gmail.com",
     role = c("aut", "cre"))
     )
+BugReports: https://github.com/christophergandrud/fredr/issues
 License: GPL (>= 3)
 Imports:
     lubridate,

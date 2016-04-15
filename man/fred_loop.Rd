@@ -24,9 +24,15 @@ code.}
 Function to download a variable from FRED for multiple countries
 }
 \examples{
+#' # Download Central government debt, total (\% of GDP) for Ireland
+fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = 'IE',
+          var_name = 'pubdebtgdp_cent_fred')
+
+\dontrun{
 # Download Central government debt, total (\% of GDP) for Ireland and Japan
 fred_loop(prefix = 'DEBTTL', suffix = 'A188A', iso2c = c('IE', 'JP'),
           var_name = 'pubdebtgdp_cent_fred')
+}
 
 # Download single series (US Federal Funds Rate)
 fred_loop(single_symbol = 'FEDFUNDS')

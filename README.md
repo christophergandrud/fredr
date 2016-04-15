@@ -3,7 +3,7 @@
 A simple R package for downloading a variable from the
 [FRED database](https://research.stlouisfed.org/fred2/) for multiple countries.
 
-[![CRAN Version](http://www.r-pkg.org/badges/version/simPH)](http://cran.r-project.org/package=simPH) [![Build Status](https://travis-ci.org/christophergandrud/fredr.svg?branch=master)](https://travis-ci.org/christophergandrud/fredr)
+[![CRAN Version](http://www.r-pkg.org/badges/version/fredr)](http://cran.r-project.org/package=simPH) [![Build Status](https://travis-ci.org/christophergandrud/fredr.svg?branch=master)](https://travis-ci.org/christophergandrud/fredr)
 
 ## Examples
 

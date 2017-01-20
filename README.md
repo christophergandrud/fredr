@@ -31,5 +31,5 @@ fred_loop(single_symbol = 'FEDFUNDS')
 The package is not on CRAN so install using:
 
 ```R
-devtools::github_install('christophergandrud/fredr')
+devtools::install_github('christophergandrud/fredr')
 ```
